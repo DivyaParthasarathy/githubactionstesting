@@ -1,21 +1,68 @@
-name: Python package
+name: CI
  
-on: [push]
- 
+# Controls when the workflow will run
+
+on:
+
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+
+  push:
+
+    branches: [ "main" ]
+
+  pull_request:
+
+    branches: [ "main" ]
+
 jobs:
-  build:
- 
+
+  lint:
+
     runs-on: self-hosted
-    strategy:
-      matrix:
-        python-version: ["pypy3.9", "pypy3.10", "3.9", "3.10", "3.11", "3.12"]
- 
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      # You can test your matrix by printing the current Python version
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
+
+      - uses: actions/checkout@v2
+
+      - run: echo "Hello world"
+
+  test:
+
+    runs-on: self-hosted
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - run: echo "Hello world"
+
+  publish:
+
+    runs-on: self-hosted
+
+    needs: [lint, test]
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - run: echo "Hello world"
+
+  test1:
+
+    strategy:
+
+      matrix:
+
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: $
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - run: echo "hello Test"
+
+
+
